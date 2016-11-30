@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
+import java.util.UUID;
 
 public class RepositoryServiceImpl implements RepositoryService {
     private static final Logger LOGGER = Logger.getLogger(RepositoryServiceImpl.class);
@@ -23,7 +24,7 @@ public class RepositoryServiceImpl implements RepositoryService {
         this.resourcesDirPath = resourcesDirPath;
     }
 
-    public Document getDocumentById(Integer documentId) throws IOException{
+    public Document getDocumentById(UUID documentId) throws IOException {
         List<Document> documents;
         try {
             documents = getAllDocuments();
@@ -91,7 +92,7 @@ public class RepositoryServiceImpl implements RepositoryService {
     }
 
     @Override
-    public void deleteDocument(Integer documentId) throws IOException {
+    public void deleteDocument(UUID documentId) throws IOException {
         try {
             List<Document> documents = getAllDocuments();
             if (documents.stream().anyMatch(doc -> doc.getDocumentId().equals(documentId))) {
@@ -100,6 +101,7 @@ public class RepositoryServiceImpl implements RepositoryService {
             }
         } catch (IOException e) {
             LOGGER.error(e);
+            throw e;
         }
     }
 

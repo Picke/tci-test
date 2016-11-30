@@ -3,12 +3,13 @@ package com.tci.collector.service;
 import com.tci.entity.Document;
 
 import java.util.List;
+import java.util.UUID;
 
 
 public interface CollectorService {
     List<Document> getAllDocuments();
-    Document getDocumentById(Integer documentId);
+    Document getDocumentById(UUID documentId);
     Document saveDocument(String repositoryName, Document document);
-    Document updateDocument(Integer documentId, Document document);
-    void deleteDocument(Integer documentId);
+    Document updateDocument(UUID documentId, Document document);
+    void deleteDocument(UUID documentId);
 }

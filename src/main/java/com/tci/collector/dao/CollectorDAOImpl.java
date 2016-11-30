@@ -3,10 +3,12 @@ package com.tci.collector.dao;
 import com.tci.entity.Document;
 import org.springframework.orm.hibernate5.support.HibernateDaoSupport;
 
+import java.util.UUID;
+
 public class CollectorDAOImpl extends HibernateDaoSupport implements CollectorDAO {
 
     @Override
-    public Document findById(Integer documentId) {
+    public Document findById(UUID documentId) {
         return getHibernateTemplate().get(Document.class, documentId);
     }
 
@@ -16,7 +18,7 @@ public class CollectorDAOImpl extends HibernateDaoSupport implements CollectorDA
     }
 
     @Override
-    public void delete(Integer documentId) {
+    public void delete(UUID documentId) {
         Document document = findById(documentId);
         if (document != null) {
             getHibernateTemplate().delete(document);

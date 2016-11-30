@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.UUID;
 import java.util.concurrent.ExecutionException;
 
 @RestController
@@ -31,7 +32,7 @@ public class CollectorController {
 
     @RequestMapping(value = "/{documentId}", method = RequestMethod.GET)
     public
-    ResponseEntity<Document> getDocumentById(@PathVariable Integer documentId) {
+    ResponseEntity<Document> getDocumentById(@PathVariable UUID documentId) {
         Document document = service.getDocumentById(documentId);
         return document != null ?
                 new ResponseEntity<>(document, HttpStatus.OK) :
@@ -51,7 +52,7 @@ public class CollectorController {
 
     @RequestMapping(value = "/{documentId}", method = RequestMethod.PUT, consumes = "application/json")
     public
-    ResponseEntity<Document> updateDocument(@PathVariable Integer documentId, @RequestBody Document document) {
+    ResponseEntity<Document> updateDocument(@PathVariable UUID documentId, @RequestBody Document document) {
         Document result = service.updateDocument(documentId, document);
         return result != null ?
                 new ResponseEntity<>(result, HttpStatus.OK) :
@@ -60,7 +61,7 @@ public class CollectorController {
 
     @RequestMapping(value = "/{documentId}", method = RequestMethod.DELETE, consumes = "application/json")
     public
-    ResponseEntity<Void> deleteDocument(@PathVariable Integer documentId) {
+    ResponseEntity<Void> deleteDocument(@PathVariable UUID documentId) {
         service.deleteDocument(documentId);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }

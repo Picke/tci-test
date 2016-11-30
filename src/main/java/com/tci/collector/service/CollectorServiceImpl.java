@@ -10,7 +10,6 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.StringUtils;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
@@ -19,7 +18,6 @@ import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
-import java.util.stream.Collectors;
 
 @Transactional
 public class CollectorServiceImpl implements CollectorService {
@@ -64,7 +62,7 @@ public class CollectorServiceImpl implements CollectorService {
 
     @Transactional
     @Override
-    public Document getDocumentById(Integer documentId) {
+    public Document getDocumentById(UUID documentId) {
         LOGGER.info(String.format("Getting document by id: [%s]", documentId));
 
         Document document = collectorDAO.findById(documentId);
@@ -112,7 +110,7 @@ public class CollectorServiceImpl implements CollectorService {
     }
 
     @Override
-    public Document updateDocument(Integer documentId, Document document) {
+    public Document updateDocument(UUID documentId, Document document) {
         LOGGER.info(String.format("Updating document with document id: [%s]", documentId));
 
         document.setDocumentId(documentId);
@@ -144,7 +142,7 @@ public class CollectorServiceImpl implements CollectorService {
     }
 
     @Override
-    public void deleteDocument(Integer documentId) {
+    public void deleteDocument(UUID documentId) {
         LOGGER.info(String.format("Deleting document with documentId: [%s]", documentId));
         collectorDAO.delete(documentId);
 
@@ -165,21 +163,13 @@ public class CollectorServiceImpl implements CollectorService {
 
     private void generateDocumentAndCommentIds(Document document) {
         LOGGER.info("Generating new documentId");
-        List<Document> documents = getAllDocuments();
-        List<Comment> comments = documents.stream().flatMap(doc -> doc.getComments().stream()).collect(Collectors.toList());
         if (document.getDocumentId() == null) {
-            document.setDocumentId(!documents.isEmpty() ?
-                    documents.stream().max(Comparator.comparingInt(Document::getDocumentId)).get().getDocumentId() + 1 :
-                    1);
+            document.setDocumentId(UUID.randomUUID());
         }
-        if (document.getComments().stream().anyMatch((comment) -> (comment.getCommentId() == null)) &&
-                !document.getComments().isEmpty()) {
-            Integer lastCommentId = (!comments.isEmpty()) ?
-                    comments.stream().max(Comparator.comparingInt(Comment::getCommentId)).get().getCommentId() :
-                    0;
+        if (document.getComments().stream().anyMatch((comment) -> (comment.getCommentId() == null))) {
             for (Comment comment : document.getComments()) {
                 if (comment.getCommentId() == null) {
-                    comment.setCommentId(++lastCommentId);
+                    comment.setCommentId(UUID.randomUUID());
                 }
             }
         }

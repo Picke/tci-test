@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping(value = "/repository/documents")
@@ -33,7 +34,7 @@ public class RepositoryController {
 
     @RequestMapping(value = "/{documentId}", method = RequestMethod.GET, produces = "application/json")
     public
-    ResponseEntity<Document> getDocumentById(@PathVariable Integer documentId) {
+    ResponseEntity<Document> getDocumentById(@PathVariable UUID documentId) {
         try {
             Document document = service.getDocumentById(documentId);
             return document != null ?
@@ -46,7 +47,7 @@ public class RepositoryController {
 
     @RequestMapping(value = "/{documentId}", method = RequestMethod.PUT, consumes = "application/json")
     public
-    ResponseEntity<Document> updateDocument(@PathVariable Integer documentId, @RequestBody Document document) {
+    ResponseEntity<Document> updateDocument(@PathVariable UUID documentId, @RequestBody Document document) {
         try {
             document.setDocumentId(documentId);
             Document result = service.updateDocument(document);
@@ -72,7 +73,7 @@ public class RepositoryController {
 
     @RequestMapping(value = "/{documentId}", method = RequestMethod.DELETE)
     public
-    ResponseEntity<Void> deleteDocument(@PathVariable Integer documentId) {
+    ResponseEntity<Void> deleteDocument(@PathVariable UUID documentId) {
         try {
             service.deleteDocument(documentId);
         } catch (IOException e) {

@@ -1,6 +1,6 @@
 [
   {
-    "documentId": "5",
+    "documentId": "07f419d6-b70b-11e6-80f5-76304dec7eb7",
     "documentName": "Document 5",
     "documentTitle": "Title 5",
     "indexes": {
@@ -11,12 +11,12 @@
     "documentContent": "Content 5",
     "comments": [
       {
-        "commentId": "7",
+        "commentId": "0a4fa1e6-b70b-11e6-80f5-76304dec7eb7",
         "userId": "3",
         "commentContent": "Comment content 7"
       },
       {
-        "commentId": "8",
+        "commentId": "0da26720-b70b-11e6-80f5-76304dec7eb7",
         "userId": "4",
         "commentContent": "Comment content 8"
       }

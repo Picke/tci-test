@@ -4,26 +4,39 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 
 @Entity
 @Table(name = "document")
 public class Document implements Serializable {
 
-    private Integer documentId;
+    private UUID documentId;
     private String documentName;
     private String documentTitle;
     private Map<String, String> indexes;
     private String documentContent;
     private List<Comment> comments;
 
+    public Document() {
+    }
+
+    public Document(UUID documentId, String documentName, String documentTitle, Map<String, String> indexes, String documentContent, List<Comment> comments) {
+        this.documentId = documentId;
+        this.documentName = documentName;
+        this.documentTitle = documentTitle;
+        this.indexes = indexes;
+        this.documentContent = documentContent;
+        this.comments = comments;
+    }
+
     @Id
     @Column(name = "document_id", unique = true, nullable = false)
-    public Integer getDocumentId() {
+    public UUID getDocumentId() {
         return documentId;
     }
 
-    public void setDocumentId(Integer documentId) {
+    public void setDocumentId(UUID documentId) {
         this.documentId = documentId;
     }
 

@@ -1,6 +1,6 @@
 [
   {
-    "documentId": "3",
+    "documentId": "f283004e-b70a-11e6-80f5-76304dec7eb7",
     "documentName": "Document 3",
     "documentTitle": "Title 3",
     "indexes": {
@@ -13,7 +13,7 @@
     ]
   },
   {
-    "documentId": "4",
+    "documentId": "f5ef8964-b70a-11e6-80f5-76304dec7eb7",
     "documentName": "Document 4",
     "documentTitle": "Title 4",
     "indexes": {
@@ -26,12 +26,12 @@
     "documentContent": "Content 4",
     "comments": [
       {
-        "commentId": "5",
+        "commentId": "f9b2fe96-b70a-11e6-80f5-76304dec7eb7",
         "userId": "4",
         "commentContent": "Comment content 5"
       },
       {
-        "commentId": "6",
+        "commentId": "fe8b3906-b70a-11e6-80f5-76304dec7eb7",
         "userId": "4",
         "commentContent": "Comment content 6"
       }

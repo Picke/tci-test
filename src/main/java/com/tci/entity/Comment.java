@@ -5,22 +5,32 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import java.io.Serializable;
+import java.util.UUID;
 
 @Entity
 @Table(name = "comment")
 public class Comment implements Serializable {
 
-    private Integer commentId;
+    private UUID commentId;
     private Integer userId;
     private String commentContent;
 
+    public Comment() {
+    }
+
+    public Comment(UUID commentId, Integer userId, String commentContent) {
+        this.commentId = commentId;
+        this.userId = userId;
+        this.commentContent = commentContent;
+    }
+
     @Id
     @Column(name = "comment_id", unique = true, nullable = false)
-    public Integer getCommentId() {
+    public UUID getCommentId() {
         return commentId;
     }
 
-    public void setCommentId(Integer commentId) {
+    public void setCommentId(UUID commentId) {
         this.commentId = commentId;
     }
 
