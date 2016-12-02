@@ -32,123 +32,17 @@
                     <target>1.8</target>
                 </configuration>
             </plugin>
+            <plugin>
+                <groupId>org.apache.tomcat.maven</groupId>
+                <artifactId>tomcat7-maven-plugin</artifactId>
+                <version>2.0</version>
+                <configuration>
+                    <server>localhost</server>
+                    <path>/</path>
+                </configuration>
+            </plugin>
         </plugins>
     </build>
-
-    <profiles>
-        <profile>
-            <id>collector</id>
-            <activation>
-                <property>
-                    <name>service</name>
-                    <value>collector</value>
-                </property>
-            </activation>
-            <properties>
-                <service.name>collector</service.name>
-            </properties>
-            <build>
-                <plugins>
-                    <plugin>
-                        <groupId>org.apache.tomcat.maven</groupId>
-                        <artifactId>tomcat7-maven-plugin</artifactId>
-                        <version>2.0</version>
-                        <configuration>
-                            <server>localhost</server>
-                            <url>http://localhost:8080</url>
-                            <path>/</path>
-                        </configuration>
-                    </plugin>
-                </plugins>
-            </build>
-        </profile>
-
-        <profile>
-            <id>repositoryA</id>
-            <activation>
-                <property>
-                    <name>service</name>
-                    <value>repositoryA</value>
-                </property>
-            </activation>
-            <properties>
-                <service.name>repository</service.name>
-                <repository.name>A</repository.name>
-            </properties>
-            <build>
-                <plugins>
-                    <plugin>
-                        <groupId>org.apache.tomcat.maven</groupId>
-                        <artifactId>tomcat7-maven-plugin</artifactId>
-                        <version>2.0</version>
-                        <configuration>
-                            <server>localhost</server>
-                            <url>http://localhost:8083</url>
-                            <path>/</path>
-                        </configuration>
-                    </plugin>
-                </plugins>
-            </build>
-        </profile>
-
-        <profile>
-            <id>repositoryB</id>
-            <activation>
-                <property>
-                    <name>service</name>
-                    <value>repositoryB</value>
-                </property>
-            </activation>
-            <properties>
-                <service.name>repository</service.name>
-                <repository.name>B</repository.name>
-            </properties>
-            <build>
-                <plugins>
-                    <plugin>
-                        <groupId>org.apache.tomcat.maven</groupId>
-                        <artifactId>tomcat7-maven-plugin</artifactId>
-                        <version>2.0</version>
-                        <configuration>
-                            <server>localhost</server>
-                            <url>http://localhost:8084</url>
-                            <path>/</path>
-                        </configuration>
-                    </plugin>
-                </plugins>
-            </build>
-        </profile>
-
-        <profile>
-            <id>repositoryC</id>
-            <activation>
-                <property>
-                    <name>service</name>
-                    <value>repositoryC</value>
-                </property>
-            </activation>
-            <properties>
-                <service.name>repository</service.name>
-                <repository.name>C</repository.name>
-            </properties>
-            <build>
-                <plugins>
-                    <plugin>
-                        <groupId>org.apache.tomcat.maven</groupId>
-                        <artifactId>tomcat7-maven-plugin</artifactId>
-                        <version>2.0</version>
-                        <configuration>
-                            <server>localhost</server>
-                            <url>http://localhost:8085</url>
-                            <path>/</path>
-                        </configuration>
-                    </plugin>
-                </plugins>
-            </build>
-        </profile>
-    </profiles>
-
-
 
     <dependencies>
         <dependency>
@@ -182,6 +76,13 @@
         </dependency>
 
         <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>javax.servlet-api</artifactId>
+            <version>3.1.0</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-core</artifactId>
             <version>5.2.2.Final</version>
@@ -209,6 +110,26 @@
             <groupId>log4j</groupId>
             <artifactId>log4j</artifactId>
             <version>1.2.17</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-test</artifactId>
+            <version>${spring.version}</version>
+            <scope>test</scope>
+        </dependency>
+
+
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.12</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-all</artifactId>
+            <version>1.10.19</version>
         </dependency>
 
     </dependencies>

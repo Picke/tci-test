@@ -1,10 +1,10 @@
 package com.tci.collector.service;
 
 import com.tci.collector.dao.CollectorDAO;
-import com.tci.entity.Comment;
 import com.tci.entity.Document;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Required;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
@@ -24,10 +24,17 @@ public class CollectorServiceImpl implements CollectorService {
 
     private static final Logger LOGGER = Logger.getLogger(CollectorServiceImpl.class);
 
-    private CollectorDAO collectorDAO;
+    private RestTemplate restTemplate;
+
+    private final CollectorDAO collectorDAO;
     private HashMap<String, String> repositoryNameUrlMap = new HashMap<>();
-    private RestTemplate restTemplate = new RestTemplate();
+
     private ExecutorService executorService;
+
+    @Required
+    public void setRestTemplate(RestTemplate restTemplate) {
+        this.restTemplate = restTemplate;
+    }
 
     @Autowired
     public CollectorServiceImpl(CollectorDAO collectorDAO, String repositoryNames, String repositoryUrls) {
@@ -94,7 +101,6 @@ public class CollectorServiceImpl implements CollectorService {
 
     @Override
     public Document saveDocument(String repositoryName, Document document) {
-        generateDocumentAndCommentIds(document);
         LOGGER.info(String.format("Saving document [%s] to repository [%s]", document, repositoryName));
         try {
             ResponseEntity<Document> responseEntity = restTemplate.postForEntity(repositoryNameUrlMap.get(repositoryName), document, Document.class);
@@ -114,7 +120,6 @@ public class CollectorServiceImpl implements CollectorService {
         LOGGER.info(String.format("Updating document with document id: [%s]", documentId));
 
         document.setDocumentId(documentId);
-        generateDocumentAndCommentIds(document);
 
         List<Future<ResponseEntity>> futures = new ArrayList<>();
 
@@ -159,20 +164,6 @@ public class CollectorServiceImpl implements CollectorService {
             }
         }
 
-    }
-
-    private void generateDocumentAndCommentIds(Document document) {
-        LOGGER.info("Generating new documentId");
-        if (document.getDocumentId() == null) {
-            document.setDocumentId(UUID.randomUUID());
-        }
-        if (document.getComments().stream().anyMatch((comment) -> (comment.getCommentId() == null))) {
-            for (Comment comment : document.getComments()) {
-                if (comment.getCommentId() == null) {
-                    comment.setCommentId(UUID.randomUUID());
-                }
-            }
-        }
     }
 }
 

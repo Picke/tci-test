@@ -24,6 +24,12 @@ public class Comment implements Serializable {
         this.commentContent = commentContent;
     }
 
+    public Comment(Comment comment) {
+        this.commentId = comment.getCommentId();
+        this.userId = comment.getUserId();
+        this.commentContent = comment.getCommentContent();
+    }
+
     @Id
     @Column(name = "comment_id", unique = true, nullable = false)
     public UUID getCommentId() {
@@ -59,5 +65,25 @@ public class Comment implements Serializable {
                 ", userId=" + userId +
                 ", commentContent='" + commentContent + '\'' +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Comment comment = (Comment) o;
+
+        if (commentId != null ? !commentId.equals(comment.commentId) : comment.commentId != null) return false;
+        if (userId != null ? !userId.equals(comment.userId) : comment.userId != null) return false;
+        return commentContent != null ? commentContent.equals(comment.commentContent) : comment.commentContent == null;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = commentId != null ? commentId.hashCode() : 0;
+        result = 31 * result + (userId != null ? userId.hashCode() : 0);
+        result = 31 * result + (commentContent != null ? commentContent.hashCode() : 0);
+        return result;
     }
 }

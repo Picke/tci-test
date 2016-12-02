@@ -63,9 +63,10 @@ public class RepositoryController {
     public
     ResponseEntity<Document> saveDocument(@RequestBody Document document) {
         try {
-            return (service.saveDocument(document) != null) ?
-                    new ResponseEntity<>(document, HttpStatus.CREATED) :
-                    new ResponseEntity<>(document, HttpStatus.BAD_REQUEST);
+            Document savedDocument = service.saveDocument(document);
+            return (savedDocument != null) ?
+                    new ResponseEntity<>(savedDocument, HttpStatus.CREATED) :
+                    new ResponseEntity<>( HttpStatus.BAD_REQUEST);
         } catch (IOException e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }

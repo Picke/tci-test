@@ -2,9 +2,8 @@ package com.tci.entity;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
+import java.util.stream.Collectors;
 
 
 @Entity
@@ -28,6 +27,23 @@ public class Document implements Serializable {
         this.indexes = indexes;
         this.documentContent = documentContent;
         this.comments = comments;
+    }
+
+    public Document(Document document) {
+        this.documentId = document.getDocumentId();
+        this.documentName = document.getDocumentName();
+        this.documentTitle = document.getDocumentTitle();
+        this.indexes = document.getIndexes().entrySet()
+                .stream()
+                .collect(Collectors.toMap(Map.Entry::getKey,
+                        Map.Entry::getValue));
+        this.documentContent = document.getDocumentContent();
+        if (document.getComments() != null && !document.getComments().isEmpty()) {
+            this.comments = new ArrayList<>();
+            for (Comment comment : document.getComments()) {
+                this.comments.add(new Comment(comment));
+            }
+        }
     }
 
     @Id
@@ -99,5 +115,34 @@ public class Document implements Serializable {
                 ", documentContent='" + documentContent + '\'' +
                 ", comments=" + comments +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Document document = (Document) o;
+
+        if (documentId != null ? !documentId.equals(document.documentId) : document.documentId != null) return false;
+        if (documentName != null ? !documentName.equals(document.documentName) : document.documentName != null)
+            return false;
+        if (documentTitle != null ? !documentTitle.equals(document.documentTitle) : document.documentTitle != null)
+            return false;
+        if (indexes != null ? !indexes.equals(document.indexes) : document.indexes != null) return false;
+        if (documentContent != null ? !documentContent.equals(document.documentContent) : document.documentContent != null)
+            return false;
+        return comments != null ? comments.equals(document.comments) : document.comments == null;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = documentId != null ? documentId.hashCode() : 0;
+        result = 31 * result + (documentName != null ? documentName.hashCode() : 0);
+        result = 31 * result + (documentTitle != null ? documentTitle.hashCode() : 0);
+        result = 31 * result + (indexes != null ? indexes.hashCode() : 0);
+        result = 31 * result + (documentContent != null ? documentContent.hashCode() : 0);
+        result = 31 * result + (comments != null ? comments.hashCode() : 0);
+        return result;
     }
 }

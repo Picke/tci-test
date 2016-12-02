@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+	http://www.springframework.org/schema/beans/spring-beans-2.5.xsd http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd">
+
+    <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+        <property name="location" value="classpath:config/app.test.properties"/>
+    </bean>
+
+    <bean id="repositoryService" class="org.mockito.Mockito" factory-method="mock">
+        <constructor-arg value="com.tci.repository.service.RepositoryServiceImpl" />
+    </bean>
+
+    <bean id="repositoryController" class="com.tci.repository.controller.RepositoryController">
+        <constructor-arg ref="repositoryService"/>
+    </bean>
+
+    <mvc:annotation-driven/>
+
+</beans>
