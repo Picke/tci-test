@@ -23,6 +23,7 @@ TCI Test Project
 
 - POST 
 	- POST http://localhost:8080/documents HTTP/1.1  
+	  
 	  {
     "documentName": "Document 6",
     "documentTitle": "Title 6",
@@ -46,6 +47,7 @@ TCI Test Project
 		>will generate documentId and commentIds, and save document by default to repositoryA
 		
 	- POST http://localhost:8080/documents?repositoryName=C HTTP/1.1
+	  
 	  {
     "documentName": "Document 6",
     "documentTitle": "Title 6",
@@ -69,8 +71,9 @@ TCI Test Project
     >will generate documentId and commentIds, and save document to repositoryC
 		
 - PUT
-	- PUT http://localhost:8080/documents/c0ae21f2-b70a-11e6-80f5-76304dec7eb7 HTTP/1.1
-	  {
+	- PUT http://localhost:8080/documents/c0ae21f2-b70a-11e6-80f5-76304dec7eb7 HTTP/1.1  
+	  
+		{
     "documentName": "Document 16",
     "documentTitle": "Title 16",
     "indexes": {
@@ -84,10 +87,12 @@ TCI Test Project
         "commentContent": "Comment content 19"
       }
     ]
-  }
-    >will update document with documentId: "c0ae21f2-b70a-11e6-80f5-76304dec7eb7" if exists
+  }  
+  
+  	> will update document with documentId: "c0ae21f2-b70a-11e6-80f5-76304dec7eb7" if exists
 	
 - DELETE 
-	- GET http://localhost:8080/documents/c0ae21f2-b70a-11e6-80f5-76304dec7eb7 HTTP/1.1 
-		>will return document with documentId: c0ae21f2-b70a-11e6-80f5-76304dec7eb7
+	- DELETE http://localhost:8080/documents/c0ae21f2-b70a-11e6-80f5-76304dec7eb7 HTTP/1.1 
+	
+		>will delete document with documentId: c0ae21f2-b70a-11e6-80f5-76304dec7eb7
 
